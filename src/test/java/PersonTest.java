@@ -1,5 +1,7 @@
 import org.junit.*;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class PersonTest {
@@ -65,5 +67,19 @@ public class PersonTest {
         Person secondPerson = new Person("Harriet", "harriet@harriet.com");
         secondPerson.save();
         assertEquals(Person.find(secondPerson.getId()), secondPerson);
+    }
+
+    @Test
+    public void getMonsters_retrievesAllMonstersFromDatabase_monstersList() {
+        Person testPerson = new Person("Henry","henry@henry.com");
+        testPerson.save();
+        FireMonster firstMonster=new FireMonster("Smokey",testPerson.getId());
+        firstMonster.save();
+        WaterMonster secondMonster=new WaterMonster("Drippy",testPerson.getId());
+        secondMonster.save();
+
+        Object[] monsters=new Object[] {firstMonster, secondMonster};
+
+        assertTrue(testPerson.getMonsters().containsAll(Arrays.asList(monsters)));
     }
 }
